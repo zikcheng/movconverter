@@ -140,7 +140,29 @@ The fixture library is a first-class citizen. Keep real files for each of the fo
 
 Unit tests use minimal synthetic box structures generated in code; integration tests run real samples (large samples are not committed — CI fetches them by script).
 
-## 8. Ecosystem References
+## 8. Implementation Status and Known Limitations (updated 2026-09)
+
+Implemented in `packages/core`: box-reader, inspector, mp4-writer primitives, Tier 1
+remuxer (faststart output, hev1→hvc1 re-tag, lossless-verified against ffmpeg),
+Tier 2 audio path (PCM extraction for sowt/twos/raw/in24/in32/lpcm, pluggable AAC
+encoder with WebCodecs default, priming elst), public `convertMovToMp4`/`canConvert`
+API, worker entry + client protocol.
+
+Known limitations to revisit:
+
+1. **Tier 2 leaves the original PCM bytes unreferenced** inside the copied mdat
+   (~10–15% size overhead on camera files). Trimming requires chunk-level mdat
+   rewriting — planned.
+2. **stco → co64 upgrade is not implemented**: if relocation pushes a 32-bit chunk
+   offset past 4GB (only possible for ~4GB inputs right at the boundary), conversion
+   fails with a clear error instead of writing a corrupt file. Same for the Tier 2
+   audio chunk offset.
+3. **Tier 3 (full transcode) throws `UnsupportedFormatError`** — the wasm subpackage
+   is the next milestone (see §5 roadmap).
+4. Only the first video and first audio track are kept; extras are dropped and
+   reported in the plan.
+
+## 9. Ecosystem References
 
 - `mediabunny` (MPL-2.0): the closest general-purpose browser media library. **This project deliberately does not depend on it** — a custom kernel buys minimal size and MOV→MP4 domain depth
 - `mp4box.js` (BSD-3): reference implementation for box parsing
