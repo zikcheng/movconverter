@@ -55,6 +55,8 @@ export interface AudioSampleInfo {
   channels: number
   sampleRate: number
   bitsPerSample: number
+  /** CoreAudio formatSpecificFlags (v2 'lpcm' only): 0x1 float, 0x2 big-endian, 0x4 signed. */
+  lpcmFlags: number | null
 }
 
 export interface ParsedTrack {
@@ -233,12 +235,14 @@ function parseAudioSampleEntry(bytes: Uint8Array, entry: StsdEntry): AudioSample
   if (version === 2) {
     // v2: version(2) revision(2) vendor(4) always3(2) always16(2) alwaysMinus2(2)
     //     always0(2) always65536(4) sizeOfStructOnly(4) sampleRate(f64) channels(4)
-    //     always7F000000(4) constBitsPerChannel(4) ...
+    //     always7F000000(4) constBitsPerChannel(4) formatSpecificFlags(4) ...
+    if (p + 48 > entry.posInMoov + entry.size) return null
     return {
       stsdVersion: 2,
-      sampleRate: dv.getFloat64(p + 20),
-      channels: dv.getUint32(p + 28),
-      bitsPerSample: dv.getUint32(p + 36),
+      sampleRate: dv.getFloat64(p + 24),
+      channels: dv.getUint32(p + 32),
+      bitsPerSample: dv.getUint32(p + 40),
+      lpcmFlags: dv.getUint32(p + 44),
     }
   }
   // v0/v1: version(2) revision(2) vendor(4) channels(2) sampleSize(2)
@@ -248,6 +252,7 @@ function parseAudioSampleEntry(bytes: Uint8Array, entry: StsdEntry): AudioSample
     channels: dv.getUint16(p + 8),
     bitsPerSample: dv.getUint16(p + 10),
     sampleRate: dv.getUint32(p + 16) / 65536,
+    lpcmFlags: null,
   }
 }
 

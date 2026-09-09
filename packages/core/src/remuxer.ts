@@ -8,13 +8,13 @@ import { buildFtyp } from './mp4-writer'
 const U32_MAX = 0xffffffff
 
 /** Maps byte ranges of the input file to their positions in the output file. */
-interface RelocationSegment {
+export interface RelocationSegment {
   oldStart: number
   oldEnd: number
   delta: number
 }
 
-interface KeptTrack {
+export interface KeptTrack {
   track: ParsedTrack
   /** Start of this trak box within the NEW moov bytes. */
   newTrakStart: number
@@ -34,7 +34,7 @@ function relocate(segments: RelocationSegment[], offset: number): number {
  * normalize the header to 32-bit size. Returns the new bytes plus where each
  * kept trak landed.
  */
-function rebuildMoov(
+export function rebuildMoov(
   movie: ParsedMovie,
   keptTrackIds: Set<number>,
 ): {
@@ -66,7 +66,7 @@ function rebuildMoov(
 }
 
 /** Rewrite hev1 sample entries to hvc1 (required for Safari/QuickTime playback). */
-function retagHevc(moovBytes: Uint8Array, kept: KeptTrack): void {
+export function retagHevc(moovBytes: Uint8Array, kept: KeptTrack): void {
   for (const entry of kept.track.stsdEntries) {
     if (entry.format !== 'hev1') continue
     const formatPos = entry.posInMoov - kept.track.trakStart + kept.newTrakStart + 4
@@ -74,7 +74,7 @@ function retagHevc(moovBytes: Uint8Array, kept: KeptTrack): void {
   }
 }
 
-function patchChunkOffsets(
+export function patchChunkOffsets(
   moovBytes: Uint8Array,
   kept: KeptTrack,
   segments: RelocationSegment[],

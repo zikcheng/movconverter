@@ -80,6 +80,7 @@ describe('parseMovie', () => {
       channels: 2,
       bitsPerSample: 16,
       sampleRate: 48000,
+      lpcmFlags: null,
     })
     expect(audio?.tables.chunkOffsets[0]).toBe(mdatPayloadStart + 270)
 
