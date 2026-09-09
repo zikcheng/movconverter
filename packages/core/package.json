@@ -1,0 +1,43 @@
+{
+  "name": "movconverter",
+  "version": "0.0.0",
+  "description": "Browser-only MOV to MP4 conversion. Lossless remuxing when possible, streaming design, constant memory usage.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zikcheng/movconverter.git"
+  },
+  "keywords": [
+    "mov",
+    "mp4",
+    "video",
+    "converter",
+    "remux",
+    "browser",
+    "webcodecs",
+    "quicktime"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./worker": {
+      "types": "./dist/worker.d.ts",
+      "default": "./dist/worker.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
