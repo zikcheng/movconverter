@@ -22,6 +22,8 @@ export interface AudioTranscodeOptions {
   primingSamples?: number
   /** Progress over the PCM encoding phase, 0..1. */
   onProgress?: (progress: number) => void
+  /** Aborts between PCM chunks. */
+  signal?: AbortSignal
 }
 
 export interface AudioTranscodeOutput {
@@ -71,9 +73,11 @@ export async function audioTranscode(
   // Phase 1: stream PCM chunks through the encoder (one chunk in memory at a time).
   const pcmTotal = totalPcmBytes(audioTrack)
   const onProgress = opts.onProgress
+  const signal = opts.signal
   async function* pcmStream(): AsyncGenerator<Float32Array> {
     let read = 0
     for await (const chunk of extractPcmChunks(movie.blob, audioTrack as ParsedTrack)) {
+      signal?.throwIfAborted()
       read += chunk.length
       yield pcmToF32(chunk, kind)
       onProgress?.(pcmTotal > 0 ? Math.min(read / pcmTotal, 1) : 1)
