@@ -7,13 +7,16 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "biome check .",
-    "lint:fix": "biome check --write ."
+    "lint:fix": "biome check --write .",
+    "changeset": "changeset",
+    "release": "pnpm build && changeset publish"
   },
   "engines": {
     "node": ">=18"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.12",
+    "@changesets/cli": "^3.0.2",
     "@types/node": "^26.5.0",
     "tsup": "^8.5.1",
     "typescript": "^5.9.3",
