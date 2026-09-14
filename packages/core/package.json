@@ -1,14 +1,14 @@
 {
   "name": "movconverter",
   "version": "0.1.0",
-  "description": "Browser-only MOV to MP4 conversion. Lossless remuxing when possible, streaming design, constant memory usage.",
+  "description": "Convert MOV to MP4 entirely in the browser — no server, no uploads. Lossless & instant remux for iPhone/Mac H.264/HEVC+AAC footage, PCM audio re-encoded via WebCodecs. Streaming, constant memory, 1GB+ files. TypeScript.",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zikcheng/movconverter.git",
     "directory": "packages/core"
   },
-  "homepage": "https://github.com/zikcheng/movconverter#readme",
+  "homepage": "https://movtomp4.net",
   "bugs": {
     "url": "https://github.com/zikcheng/movconverter/issues"
   },
