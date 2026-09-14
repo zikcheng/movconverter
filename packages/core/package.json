@@ -1,6 +1,6 @@
 {
   "name": "movconverter",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Convert MOV to MP4 entirely in the browser — no server, no uploads. Lossless & instant remux for iPhone/Mac H.264/HEVC+AAC footage, PCM audio re-encoded via WebCodecs. Streaming, constant memory, 1GB+ files. TypeScript.",
   "license": "MIT",
   "repository": {

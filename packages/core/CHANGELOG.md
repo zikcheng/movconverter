@@ -1,5 +1,11 @@
 # movconverter
 
+## 0.1.2
+
+### Patch Changes
+
+- 54578c2: Link movtomp4.net from the README, and point the architecture doc link at GitHub so it resolves on npmjs.com.
+
 ## 0.1.1
 
 ### Patch Changes
