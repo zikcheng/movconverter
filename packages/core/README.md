@@ -2,6 +2,8 @@
 
 Browser-only MOV → MP4 conversion. No server, no upload — files never leave the user's machine.
 
+**[Try it online →](https://movtomp4.net)** — the same converter as a free web tool, nothing to install.
+
 - **Zero config**: detects the codecs inside the MOV and picks the fastest path automatically
 - **Lossless & instant** for the most common case: iPhone/Mac footage (H.264/HEVC + AAC) is remuxed, not re-encoded — no wasm, constant memory, a 1GB file takes about as long as reading it from disk
 - **Camera footage** (H.264 + PCM audio): video is copied verbatim, only the audio is re-encoded to AAC through the browser's native WebCodecs encoder
@@ -60,7 +62,7 @@ preserving rotation and color metadata), shift the chunk-offset tables, and refe
 the media bytes as lazy Blob slices. Nothing is decoded, nothing is copied through
 memory, and the output is faststart (moov first).
 
-See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the full design.
+See the [architecture document](https://github.com/zikcheng/movconverter/blob/main/docs/ARCHITECTURE.md) for the full design.
 
 ## Browser support
 

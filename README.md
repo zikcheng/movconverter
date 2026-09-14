@@ -2,6 +2,8 @@
 
 Browser-only MOV → MP4 conversion. No server, no upload — files never leave the user's machine.
 
+**[Try it online →](https://movtomp4.net)** · `npm install movconverter`
+
 - **Zero config**: detects the codecs inside the MOV and picks the fastest path automatically
 - **Lossless & instant** for the most common case: iPhone/Mac footage (H.264/HEVC + AAC) is remuxed, not re-encoded — no wasm, constant memory, a 1GB file takes about as long as reading it from disk
 - **Camera footage** (H.264 + PCM audio): video is copied verbatim, only the audio is re-encoded to AAC through the browser's native WebCodecs encoder
